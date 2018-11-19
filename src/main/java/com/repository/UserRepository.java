@@ -8,6 +8,5 @@ import java.util.List;
 //orm
 @Repository
 public interface UserRepository extends JpaRepository<User,Integer> {
-    public List<User> findUsersByAgeEquals(int age);
-    public List<User> findUsersByAgeEqualsAndNameEquals(int age ,String name);
+    public List<User> findUsersById(int id);
 }

@@ -4,6 +4,7 @@ import com.model.User;
 import com.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -30,8 +31,11 @@ public class UserService {
         return all;
     }
 
-
-    public List<User> findUsersByAge(int age){
-        return userRepository.findUsersByAgeEquals(age);
+    @Transactional
+    public void insertMany(List<User> users){
+        for(int i = 0;i<users.size();i++){
+            userRepository.save(users.get(i));
+        }
     }
+
 }

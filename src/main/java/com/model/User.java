@@ -15,10 +15,19 @@ public class User {
     @Column
     private String name;
     @Column
-    private int age;
+    private int dayNum;
+    @Column
+    private String openid;
 
-    public User(String name, int age) {
+    public User(String name, int dayNum,String openid) {
         this.name = name;
-        this.age = age;
+        this.dayNum = dayNum;
+        this.openid = openid;
+    }
+
+    public User(String name, String openid) {
+        this.name = name;
+        this.dayNum = 50;
+        this.openid = openid;
     }
 }
