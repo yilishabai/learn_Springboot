@@ -22,6 +22,12 @@ public class UserService {
         return userRepository.getOne(id);
     }
 
+    public User get(String openid) { return userRepository.findUsersByOpenid(openid); }
+
+    public void update(User user){
+        userRepository.save(user);
+    }
+
     public void remove(int id){
         userRepository.delete(id);
     }

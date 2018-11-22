@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Data
@@ -18,6 +19,9 @@ public class Word {
     private String IPA;
     @Column
     private String meaning;
+//    @ManyToMany
+//    @JoinTable(name="book_word",joinColumns = {@JoinColumn(name="w_id")},inverseJoinColumns = {@JoinColumn(name="b_id")})
+//    private Set<Book> books;
 
     public Word(int id, String name, String IPA, String means) {
         this.id = id;

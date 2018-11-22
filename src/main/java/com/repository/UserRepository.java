@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<User,Integer> {
     public List<User> findUsersById(int id);
+    public User findUsersByOpenid(String openid);
 }

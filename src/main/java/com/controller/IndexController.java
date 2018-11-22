@@ -21,29 +21,43 @@ public class IndexController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/findAll",method = RequestMethod.GET)
-    public String getAllWords(){
-        List<Word> all = wordService.findAll();
-        return JSON.toJSONString(all);
-    }
-
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)//获取user信息返回user信息
     public String add(@RequestBody JSONObject text){
+        User user = null;
         System.out.println(text.toJSONString());
         String name = text.getString("nickName");
         String openid = text.getString("openid");
-        System.out.println(name);
+        int dayNum = text.getIntValue("dayNum");
+        if(name!=null&&openid!=null) {//如果名字和openid不为空
+            user = userService.get(openid);//看看能不能获取这个用户
+            if(user==null) {//说明数据库里没有该用户
+                if (dayNum != 0) {
+                    user = new User(name, dayNum, openid);//创建用户
+                } else {
+                    user = new User(name, openid);//创建用户
+                }
+                userService.add(user);//插入数据库
+            }
+        }else{
+            return "failed";
+        }
+//        System.out.println(user);
+        return JSON.toJSONString(user);//返回user
+    }
+
+    @RequestMapping(method = RequestMethod.PUT)//更新每日单词量
+    public String setDayNum(@RequestBody JSONObject text){
+        int dayNum = text.getIntValue("dayNum");
+        int id = text.getIntValue("id");
+        String openid = text.getString("openid");
+        System.out.println(dayNum);
+        System.out.println(id);
         System.out.println(openid);
-        User user = new User(name, openid);
-        User save = userService.add(user);
-        return "post request";
+        User user = userService.get(id);
+        if(user.getOpenid().equals(openid)){//简单校验
+            user.setDayNum(dayNum);//更新每日单词量
+            userService.update(user);//更新数据库
+        }
+        return "OK";
     }
-
-    @RequestMapping(value = "/getDayNum", method = RequestMethod.GET)
-    public List<Word> get(int dayNum){//获取每日单词数量的单词
-        List<Word> wordList = wordService.getWordDaynum(dayNum);
-        return wordList;
-    }
-
-
 }

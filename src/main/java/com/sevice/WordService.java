@@ -18,11 +18,6 @@ public class WordService {
         return wordRepository.getOne(id);
     }
 
-    public List<Word> findAll(){
-        List<Word> all = wordRepository.findAll();
-        return all;
-    }
-
     public List<Word> findWordById(int id){
         return wordRepository.findWordByIdEquals(id);
     }
